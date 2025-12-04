@@ -13,7 +13,7 @@ import { useEffect, useRef, useState } from "react";
 import { usePixelStreamingStore } from "./store";
 
 export interface PixelStreamingCanvasProps {
-  initialSettings?: Partial<AllSettings>;
+  initialSettings?: Partial<AllSettings> & { logLevel?: LogLevel };
 }
 
 export const PixelStreamingCanvas = ({
@@ -31,7 +31,7 @@ export const PixelStreamingCanvas = ({
   // biome-ignore lint/correctness/useExhaustiveDependencies: Run on component mount
   useEffect(() => {
     if (videoParent.current) {
-      Logger.InitLogging(LogLevel.Disabled, true);
+      Logger.InitLogging(initialSettings?.logLevel ?? LogLevel.Disabled, true);
 
       // Attach Pixel Streaming library to videoParent element:
       const config = new Config({ initialSettings });
