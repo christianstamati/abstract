@@ -4,12 +4,21 @@ import { betterAuth } from "better-auth";
 import { components } from "./_generated/api";
 import type { DataModel } from "./_generated/dataModel";
 import { query } from "./_generated/server";
+import authSchema from "./betterAuth/schema";
 
 const siteUrl = process.env.SITE_URL!;
 
 // The component client has methods needed for integrating Convex with Better Auth,
 // as well as helper methods for general use.
-export const authComponent = createClient<DataModel>(components.betterAuth);
+export const authComponent = createClient<DataModel, typeof authSchema>(
+  components.betterAuth,
+  {
+    local: {
+      schema: authSchema,
+    },
+    verbose: true,
+  },
+);
 
 export const createAuth = (
   ctx: GenericCtx<DataModel>,
@@ -20,6 +29,7 @@ export const createAuth = (
     // this is not required, but there's a lot of noise in logs without it.
     logger: {
       disabled: optionsOnly,
+      level: "debug",
     },
     baseURL: siteUrl,
     database: authComponent.adapter(ctx),
@@ -27,6 +37,27 @@ export const createAuth = (
     emailAndPassword: {
       enabled: true,
       requireEmailVerification: false,
+    },
+    socialProviders: {
+      github: {
+        clientId: process.env.GITHUB_CLIENT_ID as string,
+        clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
+      },
+    },
+    user: {
+      additionalFields: {
+        foo: {
+          type: "string",
+          required: false,
+        },
+        test: {
+          type: "json",
+          required: false,
+        },
+      },
+      deleteUser: {
+        enabled: true,
+      },
     },
     plugins: [
       // The Convex plugin is required for Convex compatibility
