@@ -1,23 +1,15 @@
-import { PixelStreamingCanvas } from "@/components/pixel-streaming/canvas";
+"use client";
 
-export default function Main() {
+import { useQuery } from "convex/react";
+import { api } from "../convex/_generated/api";
+
+export default function Home() {
+  const tasks = useQuery(api.tasks.get);
   return (
-    <div className="size-full">
-      <PixelStreamingCanvas
-        initialSettings={{
-          AutoPlayVideo: true,
-          AutoConnect: true,
-          ss: "http://192.168.1.7:80",
-          StartVideoMuted: true,
-          HoveringMouse: true,
-          WaitForStreamer: true,
-          MatchViewportRes: true,
-          TimeoutIfIdle: false,
-          TouchInput: true,
-          WebRTCFPS: 30,
-          PreferredCodec: "H264",
-        }}
-      />
-    </div>
+    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      {tasks?.map(({ _id, text }) => (
+        <div key={_id}>{text}</div>
+      ))}
+    </main>
   );
 }
