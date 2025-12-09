@@ -21,7 +21,15 @@ const getSession = async (request: NextRequest) => {
 };
 */
 
-const signInRoutes = ["/sign-in", "/sign-up", "/verify-2fa", "/reset-password"];
+const publicRoutes = [
+  "/",
+  "/sign-in",
+  "/sign-up",
+  "/verify-2fa",
+  "/reset-password",
+];
+
+const protectedRoutes = ["/dashboard"];
 
 // Just check cookie, recommended approach
 export default async function proxy(request: NextRequest) {
@@ -29,18 +37,22 @@ export default async function proxy(request: NextRequest) {
   // Uncomment to fetch the session (not recommended)
   // const session = await getSession(request);
 
-  const isSignInRoute = signInRoutes.includes(request.nextUrl.pathname);
+  const pathname = request.nextUrl.pathname;
+  const isPublicRoute = publicRoutes.includes(pathname);
+  const isProtectedRoute = protectedRoutes.includes(pathname);
 
-  if (isSignInRoute && !sessionCookie) {
+  // Allow access to public routes
+  if (isPublicRoute) {
+    // Redirect authenticated users away from sign-in pages
+    if (sessionCookie && pathname !== "/") {
+      return NextResponse.redirect(new URL("/dashboard", request.url));
+    }
     return NextResponse.next();
   }
 
-  if (!isSignInRoute && !sessionCookie) {
+  // Protect routes that require authentication
+  if (isProtectedRoute && !sessionCookie) {
     return NextResponse.redirect(new URL("/sign-in", request.url));
-  }
-
-  if (isSignInRoute || request.nextUrl.pathname === "/") {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
   return NextResponse.next();
