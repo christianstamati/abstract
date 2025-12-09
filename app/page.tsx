@@ -11,6 +11,7 @@ export default function LandingPage() {
   return (
     <div className="relative flex min-h-screen flex-col">
       <AbstractCube />
+
       {/* Header */}
       <header className="sticky top-0 z-50 w-full border-border/40 border-b bg-background/80 backdrop-blur supports-backdrop-filter:bg-background/60">
         <div className="container mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
