@@ -110,17 +110,17 @@ const data = {
   // recent projects
   recentProjects: [
     {
-      name: "Data Library",
+      name: "Project 1",
       url: "#",
       icon: IconFolder,
     },
     {
-      name: "Reports",
+      name: "Project 2",
       url: "#",
       icon: IconFolder,
     },
     {
-      name: "Word Assistant",
+      name: "Project 3",
       url: "#",
       icon: IconFolder,
     },
