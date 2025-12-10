@@ -16,7 +16,7 @@ export const authComponent = createClient<DataModel, typeof authSchema>(
     local: {
       schema: authSchema,
     },
-    verbose: true,
+    // verbose: true,
   },
 );
 
@@ -29,7 +29,7 @@ export const createAuth = (
     // this is not required, but there's a lot of noise in logs without it.
     logger: {
       disabled: optionsOnly,
-      level: "debug",
+      // level: "debug",
     },
     baseURL: siteUrl,
     database: authComponent.adapter(ctx),

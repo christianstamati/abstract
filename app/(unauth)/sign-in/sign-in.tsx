@@ -68,6 +68,7 @@ export default function SignIn() {
     await authClient.signIn.social(
       {
         provider: "github",
+        callbackURL: `${process.env.NEXT_PUBLIC_SITE_URL}/dashboard`,
       },
       {
         onRequest: () => {
