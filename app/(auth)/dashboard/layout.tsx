@@ -1,3 +1,4 @@
+import { Toaster } from "sonner";
 import { AppSidebar } from "@/components/app-sidebar";
 import { SiteHeader } from "@/components/site-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
@@ -16,6 +17,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <SidebarInset>
         <SiteHeader />
         {children}
+        <Toaster position="top-center" richColors />
       </SidebarInset>
     </SidebarProvider>
   );

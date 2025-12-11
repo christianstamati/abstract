@@ -2,6 +2,7 @@
 
 import { type Icon, IconCirclePlusFilled } from "@tabler/icons-react";
 import Link from "next/link";
+import { NewProjectDialog } from "@/app/(auth)/dashboard/projects/new-project-dialog";
 import {
   SidebarGroup,
   SidebarGroupContent,
@@ -23,15 +24,20 @@ export function NavMain({
     <SidebarGroup>
       <SidebarGroupContent className="flex flex-col gap-2">
         <SidebarMenu>
-          <SidebarMenuItem className="flex items-center gap-2">
-            <SidebarMenuButton
-              tooltip="Quick Create"
-              className="min-w-8 bg-primary text-primary-foreground duration-200 ease-linear hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground"
-            >
-              <IconCirclePlusFilled />
-              <span>New Project</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
+          <NewProjectDialog
+            trigger={
+              <SidebarMenuItem className="flex items-center gap-2">
+                <SidebarMenuButton
+                  type="button"
+                  tooltip="Quick Create"
+                  className="min-w-8 bg-primary text-primary-foreground duration-200 ease-linear hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground"
+                >
+                  <IconCirclePlusFilled />
+                  <span>New Project</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            }
+          />
         </SidebarMenu>
         <SidebarMenu>
           {items.map((item) => (
